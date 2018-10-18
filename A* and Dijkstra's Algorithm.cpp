@@ -6,7 +6,7 @@ using namespace std;
 struct node { int y; int x; int cost;
 node(int _y, int _x, int _cost) :y(_y), x(_x), cost(_cost) {};
 };
-bool operator<(node a, node b) {//¿ì¼±¼øÀ§ Å¥¸¦ ÃÖ¼Ú°ªÀ» ¸Ç À§¿¡ ¿À°Ô
+bool operator<(node a, node b) {//ìš°ì„ ìˆœìœ„ íë¥¼ ìµœì†Ÿê°’ì„ ë§¨ ìœ„ì— ì˜¤ê²Œ
 	if (a.cost > b.cost) return true;
 	return false;
 }
@@ -27,27 +27,27 @@ int main(int argc, char** argv) {
 	char buf;
 	for (int tc = 1; tc <= T; tc++) {
 		fin >> N;
-		for (int i = 0; i < N; i++)//°£¼±°£ÀÇ ºñ¿ë °ª ÀÔ·Â
+		for (int i = 0; i < N; i++)//ê°„ì„ ê°„ì˜ ë¹„ìš© ê°’ ì…ë ¥
 			for (int j = 0; j < N; j++)
 			{
 				visited[i][j] = false;
 				fin >> buf;
 				map[i][j]=buf-48;
 			}
-		//´Ù ÀÍ½ºÆ®¶ó
-		q.push(node(0, 0, map[0][0]));//½ÃÀÛÁ¡
+		//A*
+		q.push(node(0, 0, map[0][0]));//ì‹œì‘ì 
 		visited[0][0] = true;
 		int ans;
 		while (!q.empty()) {
 			node here = q.top();
 			q.pop();
-			if (here.y == N - 1 && here.x == N - 1) { ans = here.cost; break; }//µµÂøÁöÁ¡ µµÂø
+			if (here.y == N - 1 && here.x == N - 1) { ans = here.cost; break; }//ë„ì°©ì§€ì  ë„ì°©
 			//cout << here.y << " " << here.x << endl;
-			for (register int i = 0; i < 4; i++) {//°¥ ¼ö ÀÖ´Â ¹æÇâ Å½»ö
+			for (register int i = 0; i < 4; i++) {//ê°ˆ ìˆ˜ ìˆëŠ” ë°©í–¥ íƒìƒ‰
 				if(!visited[here.y + dir[i][0]][here.x + dir[i][1]]&&isrange(here.y + dir[i][0], here.x + dir[i][1])){
-					//ÃÖ¼Ò ¿ì¼±¼øÀ§ Å¥¸¦ »ç¿ëÇÏ´Ï ÀÌ °ªÀº Ç×»ó hereÁöÁ¡±îÁöÀÇ ÃÖ´Ü °æ·Î°¡ µÊ. ±×·¡¼­ µû·Î ºñ±³ ¾ø¾îµµ ÀÌ °ªÀÌ ÃÖ´Ü °æ·Î ÀÓÀ» ¾Í
-							q.push(node(here.y + dir[i][0], here.x + dir[i][1], here.cost + map[here.y + dir[i][0]][here.x + dir[i][1]]));//ÇöÀç À§Ä¡¿Í ½ÃÀÛÁ¡ºÎÅÍ ÇöÀç°ª ±îÁöÀÇ °ª(ÃÖ¼Ú°ª)À¸·Î ³Ñ°ÜÁÜ
-							visited[here.y + dir[i][0]][here.x + dir[i][1]] = true;//´Ù½Ã ¹æ¹®ÇÏ¿© ¹«ÇÑ ·çÇÁ µ¹°Å³ª ÃÖ´Ü °æ·Î °è»êÀ» ¸ÁÄ¡´Â ÀÏÀÌ ¾øµµ·Ï
+					//ìµœì†Œ ìš°ì„ ìˆœìœ„ íë¥¼ ì‚¬ìš©í•˜ë‹ˆ ì´ ê°’ì€ í•­ìƒ hereì§€ì ê¹Œì§€ì˜ ìµœë‹¨ ê²½ë¡œê°€ ë¨. ê·¸ë˜ì„œ ë”°ë¡œ ë¹„êµ ì—†ì–´ë„ ì´ ê°’ì´ ìµœë‹¨ ê²½ë¡œ ì„ì„ ì•
+							q.push(node(here.y + dir[i][0], here.x + dir[i][1], here.cost + map[here.y + dir[i][0]][here.x + dir[i][1]]));//í˜„ì¬ ìœ„ì¹˜ì™€ ì‹œì‘ì ë¶€í„° í˜„ì¬ê°’ ê¹Œì§€ì˜ ê°’(ìµœì†Ÿê°’)ìœ¼ë¡œ ë„˜ê²¨ì¤Œ
+							visited[here.y + dir[i][0]][here.x + dir[i][1]] = true;//ë‹¤ì‹œ ë°©ë¬¸í•˜ì—¬ ë¬´í•œ ë£¨í”„ ëŒê±°ë‚˜ ìµœë‹¨ ê²½ë¡œ ê³„ì‚°ì„ ë§ì¹˜ëŠ” ì¼ì´ ì—†ë„ë¡
 
 					
 				}
@@ -55,7 +55,7 @@ int main(int argc, char** argv) {
 			
 		}		
 		cout << "#" << tc << " " <<ans << "\n";
-		//Å¥ºñ¿ì±â
+		//íë¹„ìš°ê¸°
 		while (!q.empty()) q.pop();
 	}
 	system("pause");
